@@ -21,6 +21,7 @@ plugins:
 
 
 ## Utility Usage
+NOTE: All operations are done **after** yaml has been processed. This means operations cannot be done in-place such as references like `${self:custom:variable}`.
 | Function | Description |
 |--|--|
 | [fn::lower][fn-lower] | Converts a string to its lowercase representation | 
