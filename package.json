@@ -1,0 +1,34 @@
+{
+  "name": "@teleology/shell",
+  "version": "1.0.2",
+  "description": "A collection of serverless framework utilities",
+  "main": "src/index.js",
+  "files": [
+    "src/*"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/icarus-sullivan/serverless-plugin-utils.git"
+  },
+  "keywords": [
+    "serverless",
+    "plugin",
+    "utils",
+    "lower",
+    "ternary",
+    "split", 
+    "join",
+    "upper",
+    "utility",
+    "serverless-plugin-utils"
+  ],
+  "author": "Chris Sullivan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/icarus-sullivan/serverless-plugin-utils/issues"
+  },
+  "homepage": "https://github.com/icarus-sullivan/serverless-plugin-utils#readme",
+  "dependencies": {
+    "iter-object": "^1.0.0"
+  }
+}
