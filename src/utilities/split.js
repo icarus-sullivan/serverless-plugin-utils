@@ -1,10 +1,10 @@
 
 module.exports = {
   id: 'fn::split',
-  resolve: ({ value, delimeter, index }) => {
+  resolve: ({ value, delimiter, index }) => {
     if (typeof index === 'number') {
-      return value.split(delimeter)[index];
+      return value.split(delimiter)[index];
     }
-    return value.split(delimeter);
+    return value.split(delimiter);
   }
 }
