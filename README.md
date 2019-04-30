@@ -21,7 +21,7 @@ plugins:
 
 
 ## Utility Usage
-NOTE: All operations are done **after** yaml has been processed. This means operations cannot be done in-place such as references like `${self:custom:variable}`.
+
 | Function | Description |
 |--|--|
 | [fn::lower][fn-lower] | Converts a string to its lowercase representation | 
@@ -30,6 +30,9 @@ NOTE: All operations are done **after** yaml has been processed. This means oper
 | [fn::join][fn-join] | Joins a collection of values with a given delimiter |
 | [fn::split][fn-split] | Splits a string value on a given delimiter | 
 
+
+## Caveats
+All operations are done **after** yaml has been processed. This means operations cannot be done in-place such as references like `${self:custom:variable}`.
 
 [link-download]: https://img.shields.io/npm/dt/serverless-plugin-utils.svg
 [link-version]: https://img.shields.io/npm/v/serverless-plugin-utils.svg
