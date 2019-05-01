@@ -1,6 +1,6 @@
 [Home](https://github.com/icarus-sullivan/serverless-plugin-utils/blob/master/README.md)
 
-# fn::join
+# fn::ternary
 Performs an equality check and returns defined results
 
 ### Usage
@@ -18,20 +18,12 @@ This utility is useful for resolving domain names or naming conventions that are
 Example:
 ```
 custom:
-  stageDomain:
-    fn::join:
-      delimiter: '.'
-      values: 
-        - fn::lower: ${opt:stage}
-        - awesome
-        - com
-
   domain:
     fn::ternary:
       - ${opt:stage}
       - prod
       - awesome.com
-      - ${self:custom.stageDomain}
+      - fn::lower: ${opt:stage}.awesome.com
 ```
 
 Outputs:
