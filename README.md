@@ -32,7 +32,33 @@ plugins:
 
 
 ## Caveats
-All operations are done **after** yaml has been processed. This means operations cannot be done in-place such as references like `${self:custom:variable}`.
+All operations are done **after** yaml has been processed. This mean certain operations cannot be done in-line. 
+
+Example:
+```
+something:
+  fn::join:
+    delimiter: '-'
+    values:
+      - one
+      - two
+
+injected: ${opt:stage}${self:custom.something}
+
+// Serverless Error ---------------------------------------
+// Trying to populate non string value into a string for variable ${self:custom.something}. Please make sure the value of the property is a string.
+```
+
+To work around this fully use the utils option. The above can be reworked as the following. 
+```
+injected:
+  fn::join:
+    delimiter: '-'
+    values:
+      - ${opt:stage}one
+      - two
+```
+
 
 [link-download]: https://img.shields.io/npm/dt/serverless-plugin-utils.svg
 [link-version]: https://img.shields.io/npm/v/serverless-plugin-utils.svg
