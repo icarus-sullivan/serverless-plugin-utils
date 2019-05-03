@@ -33,10 +33,18 @@ class PluginUtils {
       return val;
     }
 
-    this.sls.service.custom = iterReplace(this.sls.service.custom, delegate);
-    this.sls.service.functions = iterReplace(this.sls.service.functions, delegate);
-    this.sls.service.resources = iterReplace(this.sls.service.resources, delegate);
-    this.sls.service.provider = iterReplace(this.sls.service.provider, delegate);
+    if (this.sls.service.custom) {
+      this.sls.service.custom = iterReplace(this.sls.service.custom, delegate);
+    }
+    if (this.sls.service.functions) {
+      this.sls.service.functions = iterReplace(this.sls.service.functions, delegate);
+    }
+    if (this.sls.service.resources) {
+      this.sls.service.resources = iterReplace(this.sls.service.resources, delegate);
+    }
+    if (this.sls.service.provider) {
+      this.sls.service.provider = iterReplace(this.sls.service.provider, delegate);
+    }
   }
 
 }
