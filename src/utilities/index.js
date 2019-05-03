@@ -4,5 +4,6 @@ module.exports = [
   require('./upper'),
   require('./join'),
   require('./split'),
-  require('./ternary')
+  require('./ternary'),
+  require('./switch'),
 ];
