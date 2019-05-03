@@ -29,6 +29,7 @@ plugins:
 | [fn::ternary][fn-ternary] | Performs equality check and returns a defined result |
 | [fn::join][fn-join] | Joins a collection of values with a given delimiter |
 | [fn::split][fn-split] | Splits a string value on a given delimiter | 
+| [fn::switch][fn-switch] | Performs switch-statement lookups | 
 
 
 ## Caveats
@@ -69,3 +70,4 @@ injected:
 [fn-join]: https://github.com/icarus-sullivan/serverless-plugin-utils/blob/master/documentation/join.md
 [fn-split]: https://github.com/icarus-sullivan/serverless-plugin-utils/blob/master/documentation/split.md
 [fn-ternary]: https://github.com/icarus-sullivan/serverless-plugin-utils/blob/master/documentation/ternary.md
+[fn-switch]: https://github.com/icarus-sullivan/serverless-plugin-utils/blob/master/documentation/switch.md
