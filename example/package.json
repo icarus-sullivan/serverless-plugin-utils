@@ -1,0 +1,14 @@
+{
+  "name": "example",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "test": "npx serverless utils compute"
+  },
+  "devDependencies": {},
+  "dependencies": {
+    "serverless": "^2.10.0",
+    "serverless-plugin-utils": "../"
+  }
+}

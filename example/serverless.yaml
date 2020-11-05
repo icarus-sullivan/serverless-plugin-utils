@@ -1,0 +1,19 @@
+service: util-example
+
+plugins:
+  - serverless-plugin-utils
+  
+custom:
+  package_json_version: ${file(./package.json):version}
+  version:
+    fn::join:
+      delimiter: '_'
+      values:
+        fn::split:
+          delimiter: '.'
+          value: ${self:custom.package_json_version}
+  version_with_underscores: ${self:custom.version}
+
+provider:
+  name: aws
+  runtime: nodejs10.x

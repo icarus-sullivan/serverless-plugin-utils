@@ -1,52 +1,98 @@
-const { iterReplace } = require('iter-object');
-const utils = require('./utilities');
+const { iter_repl } = require('iter-object');
+const { pick } = require('@teleology/fp');
+const utils = require('./utils');
 
-const BUILD_HOOKS = [
-  'before:package:createDeploymentArtifacts',
-  'before:deploy:function:packageFunction',
-  'before:invoke:local:invoke',
-  'before:run:run',
-];
+const { 
+  PLUGIN,
+  IDENTIFIER_COLOR,
+  IDENTIFIER,
+  COLOR_RESET,
+ } = require('./config');
 
 class PluginUtils {
   constructor(sls) {
-    this.sls = sls;
-    this.provider = this.sls.getProvider('aws');
+    this.serverless = sls;
+    this.provider = this.serverless.getProvider('aws');
 
-    const delegate = this.delegate.bind(this);
-    this.hooks = BUILD_HOOKS.reduce((a, b) => (a[b] = delegate, a), {});
+    this.hooks = {
+      [`${PLUGIN}:compute:compute`]: this.printCompute.bind(this),
+    };
+
+    this.commands = {
+      [PLUGIN]: {
+        usage: 'A collection of serverless framework utilities',
+        lifecycleEvents: [PLUGIN],
+        commands: {
+          compute: {
+            usage: 'Display compute configuration',
+            lifecycleEvents: ['compute'],
+          },
+        },
+      },
+    };
+
+    setTimeout(this.compute.bind(this), 100);
   }
 
-  delegate() {
-    const delegate = (ignore, value) => {
-      let val = value;
-      for (const { id, resolve } of utils) {
-        if (val === Object(val) && val.hasOwnProperty(id)) {
-          // recurse check to resolve child utils
-          val = iterReplace(val, delegate);
+  log(...args) {
+    this.serverless.cli.consoleLog(
+      [`${IDENTIFIER_COLOR}${IDENTIFIER}${COLOR_RESET}`, ...args].join(' '),
+    );
+  }
 
-          // then perform resolution
-          val = resolve(val[id]);
-        }
+  printCompute() {
+    const subset = {
+      plugins: pick('service.plugins')(this.serverless, []),
+      custom: pick('service.custom')(this.serverless, {}),
+      provider: pick('service.provider')(this.serverless, {}),
+      functions: pick('service.functions')(this.serverless, {}),
+      resources: pick('service.resources')(this.serverless, {}),
+    };
+
+    this.log(JSON.stringify(subset, null, 2));
+  }
+
+  compute() {
+    let last = undefined;
+    const delegate = (k, v) => {
+      const fn = utils[k];
+
+      if (last) {
+        v = v[last];
+        last = undefined;
       }
 
-      return val;
-    }
+      if (fn) {
+        last = k;
+        return fn(v);
+      }
+      
+      return v;
+    };
 
-    if (this.sls.service.custom) {
-      this.sls.service.custom = iterReplace(this.sls.service.custom, delegate);
+    if (this.serverless.service.custom) {
+      this.serverless.service.custom = iter_repl(this.serverless.service.custom, delegate);
     }
-    if (this.sls.service.functions) {
-      this.sls.service.functions = iterReplace(this.sls.service.functions, delegate);
+    if (this.serverless.service.functions) {
+      this.serverless.service.functions = iter_repl(
+        this.serverless.service.functions,
+        delegate,
+      );
     }
-    if (this.sls.service.resources) {
-      this.sls.service.resources = iterReplace(this.sls.service.resources, delegate);
+    if (this.serverless.service.resources) {
+      this.serverless.service.resources = iter_repl(
+        this.serverless.service.resources,
+        delegate,
+      );
     }
-    if (this.sls.service.provider) {
-      this.sls.service.provider = iterReplace(this.sls.service.provider, delegate);
+    if (this.serverless.service.provider) {
+      this.serverless.service.provider = iter_repl(
+        this.serverless.service.provider,
+        delegate,
+      );
     }
   }
-
+  
 }
 
 module.exports = PluginUtils;
