@@ -30,6 +30,7 @@ plugins:
 | [fn::join][fn-join] | Joins a collection of values with a given delimiter |
 | [fn::split][fn-split] | Splits a string value on a given delimiter | 
 | [fn::switch][fn-switch] | Performs switch-statement lookups | 
+| [fn::capitalized][fn-capitalized] | Converts a string to its Titlecase representation | 
 
 
 ## Caveats
