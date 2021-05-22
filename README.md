@@ -30,6 +30,7 @@ plugins:
 | [fn::join][fn-join] | Joins a collection of values with a given delimiter |
 | [fn::split][fn-split] | Splits a string value on a given delimiter | 
 | [fn::switch][fn-switch] | Performs switch-statement lookups | 
+| [fn::capitalized][fn-capitalized] | Converts a string to its Titlecase representation | 
 
 
 ## Caveats
@@ -71,3 +72,4 @@ injected:
 [fn-split]: https://github.com/icarus-sullivan/serverless-plugin-utils/blob/master/documentation/split.md
 [fn-ternary]: https://github.com/icarus-sullivan/serverless-plugin-utils/blob/master/documentation/ternary.md
 [fn-switch]: https://github.com/icarus-sullivan/serverless-plugin-utils/blob/master/documentation/switch.md
+[fn-capitalized]: https://github.com/icarus-sullivan/serverless-plugin-utils/blob/master/documentation/capitalized.md

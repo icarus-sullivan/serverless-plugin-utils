@@ -5,4 +5,5 @@ module.exports = {
   ...require('./split'),
   ...require('./ternary'),
   ...require('./switch'),
+  ...require('./capitalized'),
 };
