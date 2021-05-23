@@ -117,6 +117,16 @@ unit(
 );
 
 unit(
+  'capitalized',
+  {
+    foo: {
+      'fn::capitalized': 'l38gt1',
+    },
+  },
+  'L38gt1',
+);
+
+unit(
   'switch - matching case',
   {
     foo: {
