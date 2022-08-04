@@ -1,190 +1,95 @@
-const PluginUtil = require('../src');
+const join = require('../src/utils/join');
+const split = require('../src/utils/split');
+const ternary = require('../src/utils/ternary');
+const lower = require('../src/utils/lower');
+const upper = require('../src/utils/upper');
+const capitalize = require('../src/utils/capitalize');
+const switchFn = require('../src/utils/switch');
 
-const framework = (custom) => {
-  const plugin = new PluginUtil({
-    service: {
-      custom,
-      functions: {},
-      provider: {},
-      resources: {},
-    },
-    getProvider: jest.fn(),
+test('join', () => {
+  const result = join({
+    params: ['one', 'two', 'three', '-'],
+  });
+  expect(result).toMatchObject({
+    value: 'one-two-three',
+  });
+});
+
+test('split', () => {
+  const result = split({
+    params: ['foo-bar-example', '-'],
+  });
+  expect(result).toMatchObject({
+    value: ['foo', 'bar', 'example'],
   });
 
-  return plugin.serverless.service.custom;
-};
+  const result2 = split({
+    params: ['foo-bar-example', '-', 0],
+  });
+  expect(result2).toMatchObject({
+    value: 'foo',
+  });
+});
 
-const unit = (name, custom, is) =>
-  test(name, () => expect(framework(custom).foo).toEqual(is));
+test('ternary', () => {
+  const result = ternary({
+    params: ['prod', 'prod', true, false],
+  });
+  expect(result).toMatchObject({
+    value: true,
+  });
 
-unit(
-  'complex',
-  {
-    foo: {
-      'fn::join': {
-        delimiter: '_',
-        values: {
-          ['fn::split']: {
-            delimiter: '.',
-            value: '1.0.0',
-          }, 
-        }
-      }
-    },
-  },
-  '1_0_0',
-);
+  const result2 = ternary({
+    params: ['prod', 'beta', true, false],
+  });
+  expect(result2).toMatchObject({
+    value: false,
+  });
+});
 
+test('lower', () => {
+  const result = lower({
+    params: ['DTesjf3'],
+  });
+  expect(result).toMatchObject({
+    value: 'dtesjf3',
+  });
+});
 
-unit(
-  'join',
-  {
-    foo: {
-      'fn::join': {
-        delimiter: '-',
-        values: ['one', 'two', 'three'],
-      },
-    },
-  },
-  'one-two-three',
-);
+test('upper', () => {
+  const result = upper({
+    params: ['l38gt1'],
+  });
+  expect(result).toMatchObject({
+    value: 'L38GT1',
+  });
+});
 
-unit(
-  'split',
-  {
-    foo: {
-      'fn::split': {
-        delimiter: '-',
-        value: 'foo-bar-example',
-      },
-    },
-  },
-  ['foo', 'bar', 'example'],
-);
+test('capitalize', () => {
+  const result = capitalize({
+    params: ['l38gt1'],
+  });
+  expect(result).toMatchObject({
+    value: 'L38gt1',
+  });
+});
 
-unit(
-  'split - index',
-  {
-    foo: {
-      'fn::split': {
-        delimiter: '-',
-        value: 'foo-bar-exampe',
-        index: 1,
-      },
-    },
-  },
-  'bar',
-);
+test('switch', () => {
+  const cases = {
+    foo: 'awesome',
+    '*': 'nope',
+  };
+  const result = switchFn({
+    params: ['foo', cases],
+  });
+  expect(result).toMatchObject({
+    value: 'awesome',
+  });
 
-unit(
-  'ternary - truthy',
-  {
-    foo: {
-      'fn::ternary': ['prod', 'prod', true, false],
-    },
-  },
-  true,
-);
-
-unit(
-  'ternary - falsey',
-  {
-    foo: {
-      'fn::ternary': ['prod', 'beta', true, false],
-    },
-  },
-  false,
-);
-
-unit(
-  'lower',
-  {
-    foo: {
-      'fn::lower': 'DTesjf3',
-    },
-  },
-  'dtesjf3',
-);
-
-unit(
-  'upper',
-  {
-    foo: {
-      'fn::upper': 'l38gt1',
-    },
-  },
-  'L38GT1',
-);
-
-unit(
-  'capitalized',
-  {
-    foo: {
-      'fn::capitalized': 'l38gt1',
-    },
-  },
-  'L38gt1',
-);
-
-unit(
-  'switch - matching case',
-  {
-    foo: {
-      'fn::switch': {
-        key: 'foo',
-        cases: {
-          foo: 'awesome',
-          '*': 'nope',
-        },
-      },
-    },
-  },
-  'awesome',
-);
-
-unit(
-  'switch - default case',
-  {
-    foo: {
-      'fn::switch': {
-        key: 'dev',
-        cases: {
-          foo: 'awesome',
-          '*': 'nope',
-        },
-      },
-    },
-  },
-  'nope',
-);
-
-unit(
-  'complex - domain resolve',
-  {
-    foo: {
-      'fn::lower': {
-        'fn::ternary': ['dev', 'prod', 'awesome.com', 'beta-awesome.com'],
-      },
-    },
-  },
-  'beta-awesome.com',
-);
-
-unit(
-  'complex - domain resolve 2',
-  {
-    foo: {
-      'fn::lower': {
-        'fn::switch': {
-          key: 'devChris',
-          cases: {
-            prod: 'awesome.com',
-            beta: 'beta-awesome.com',
-            '*': 'test1.awesome.com',
-          },
-        },
-      },
-    },
-  },
-  'test1.awesome.com',
-);
+  const result2 = switchFn({
+    params: ['bar', cases],
+  });
+  expect(result2).toMatchObject({
+    value: 'nope',
+  });
+});

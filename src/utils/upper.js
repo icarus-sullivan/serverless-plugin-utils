@@ -1,3 +1,7 @@
-module.exports = {
-  ['fn::upper']: (value) => value.toUpperCase(),
+module.exports = ({ params }) => {
+  const [value] = params;
+
+  return {
+    value: `${value}`.toUpperCase(),
+  };
 };

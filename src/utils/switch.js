@@ -1,3 +1,7 @@
-module.exports = {
-  ['fn::switch']: ({ key, cases }) => cases[key] || cases['*'],
+module.exports = ({ params }) => {
+  const [key, cases] = params;
+
+  return {
+    value: cases[key] || cases['*'],
+  };
 };

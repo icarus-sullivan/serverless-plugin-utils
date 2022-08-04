@@ -1,8 +1,10 @@
-module.exports = {
-  ['fn::split']: ({ value, delimiter, index }) => {
-    if (typeof index === 'number') {
-      return value.split(delimiter)[index];
-    }
-    return value.split(delimiter);
-  },
+module.exports = ({ params }) => {
+  const [value, delimiter, index] = params;
+
+  return {
+    value:
+      typeof index === 'number'
+        ? value.split(delimiter)[index]
+        : value.split(delimiter),
+  };
 };

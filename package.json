@@ -1,6 +1,6 @@
 {
   "name": "serverless-plugin-utils",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "A collection of serverless framework utilities",
   "main": "src/index.js",
   "files": [
@@ -34,9 +34,7 @@
   },
   "homepage": "https://github.com/icarus-sullivan/serverless-plugin-utils#readme",
   "dependencies": {
-    "@teleology/fp": "^1.0.6",
-    "iter-object": "^2.0.0",
-    "js-yaml": "^3.14.0"
+    "@teleology/fp": "^1.0.6"
   },
   "devDependencies": {
     "eslint": "^7.6.0",

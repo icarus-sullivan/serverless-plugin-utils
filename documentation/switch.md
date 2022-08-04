@@ -1,28 +1,26 @@
 [Home](https://github.com/icarus-sullivan/serverless-plugin-utils/blob/master/README.md)
 
-# fn::switch
+# switch
 Performs switch-statement lookups
 
 ### Usage
 ```
-varName:
-  fn::switch:
-    key: string
-    cases:
-      string: any
-      '*': any // default case 
+cases:
+  key1: any
+  key2: any
+
+varName: ${switch(key, cases)}
 ```
 
 Example:
 ```
 custom:
-  socketUri:
-    fn::switch: 
-      key: ${opt:stage}
-      cases:
-        prod: wss://example.com/prod
-        test: wss://example.com/test1
-        '*': wss://example.com/beta
+  stages:
+    prod: wss://example.com/prod
+    test: wss://example.com/test1
+    '*': wss://example.com/beta
+
+  socketUri: ${switch(${self:provider.stage}, ${self:custom.stages})}
 ```
 
 Outputs:

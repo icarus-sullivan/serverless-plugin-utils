@@ -1,9 +1,23 @@
 module.exports = {
-  ...require('./lower'),
-  ...require('./upper'),
-  ...require('./join'),
-  ...require('./split'),
-  ...require('./ternary'),
-  ...require('./switch'),
-  ...require('./capitalized'),
+  ternary: {
+    resolve: require('./ternary'),
+  },
+  switch: {
+    resolve: require('./switch'),
+  },
+  split: {
+    resolve: require('./split'),
+  },
+  lower: {
+    resolve: require('./lower'),
+  },
+  upper: {
+    resolve: require('./upper'),
+  },
+  join: {
+    resolve: require('./join'),
+  },
+  capitalize: {
+    resolve: require('./capitalize'),
+  },
 };

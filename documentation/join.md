@@ -1,14 +1,11 @@
 [Home](https://github.com/icarus-sullivan/serverless-plugin-utils/blob/master/README.md)
 
-# fn::join
+# join
 Joins a collection of values with a given delimiter
 
 ### Usage
 ```
-varName:
-  fn::join:
-    delimiter: string
-    values: string[]
+varName: ${join(...items, delimiter)}
 ```
 
 Example:
@@ -17,13 +14,7 @@ provider:
   stage: ${opt:stage, 'dev'}
 
 custom:
-  stageDomain: 
-    fn::join:
-      delimiter: '.'
-      values:
-        - ${self:provider.stage}
-        - awesome
-        - com
+  stageDomain: ${join(${self:provider.stage}, awesome, com, '.')}
 ```
 
 Outputs:
