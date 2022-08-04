@@ -6,10 +6,10 @@ plugins:
 custom:
   package_json_version: ${file(./package.json):version}
   version:
-    fn::join:
+    join:
       delimiter: '_'
       values:
-        fn::split:
+        split:
           delimiter: '.'
           value: ${self:custom.package_json_version}
   version_with_underscores: ${self:custom.version}

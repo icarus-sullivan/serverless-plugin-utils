@@ -1,16 +1,13 @@
 [Home](https://github.com/icarus-sullivan/serverless-plugin-utils/blob/master/README.md)
 
-# fn::ternary
+# ternary
 Performs an equality check and returns defined results
 
 ### Usage
 ```
-varName:
-  fn::ternary:
-    - left operand
-    - right operand
-    - truthy
-    - falsey
+varName: ${ternary(leftValue, rightValue, truthy, falsy)}
+
+// leftValue === rightValue ? truthy : falsy
 ```
 
 This utility is useful for resolving domain names or naming conventions that are shorter in one environment than that of another. 
@@ -18,12 +15,7 @@ This utility is useful for resolving domain names or naming conventions that are
 Example:
 ```
 custom:
-  domain:
-    fn::ternary:
-      - ${opt:stage}
-      - prod
-      - awesome.com
-      - fn::lower: ${opt:stage}.awesome.com
+  domain: ${ternary( ${opt:stage}, prod, awesome.com, ${lower( ${opt:stage}.awesome.com )} )}
 ```
 
 Outputs:

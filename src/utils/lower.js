@@ -1,3 +1,7 @@
-module.exports = {
-  ['fn::lower']: (value) => value.toLowerCase(),
+module.exports = ({ params }) => {
+  const [value] = params;
+
+  return {
+    value: `${value}`.toLowerCase(),
+  };
 };

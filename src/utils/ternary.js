@@ -1,3 +1,7 @@
-module.exports = {
-  ['fn::ternary']: ([left, right, truthy, falsy]) => (left === right ? truthy : falsy),
+module.exports = ({ params }) => {
+  const [left, right, truthy, falsy] = params;
+
+  return {
+    value: left === right ? truthy : falsy,
+  };
 };

@@ -1,10 +1,14 @@
 [Home](https://github.com/icarus-sullivan/serverless-plugin-utils/blob/master/README.md)
 
-# fn::capitalized
+# capitalize
 Converts a string to its Titlecase representation
 
 ### Usage
+```
+varName: ${capitalize(value)}
+```
 
+Example:
 ```
 service: Example
 
@@ -12,10 +16,8 @@ provider:
   stage: ${opt:stage, 'dev'}
 
 custom:
-  bucketName: 
-    fn::capitalized: ${self:provider.stage}.${self:service}.uploads
+  bucketName: ${capitalize(${self:provider.stage}.${self:service}.uploads)}
 ```
-
 
 
 Outputs:
