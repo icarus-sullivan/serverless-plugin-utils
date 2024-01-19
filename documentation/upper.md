@@ -14,7 +14,7 @@ provider:
   stage: ${opt:stage, 'dev'}
 
 custom:
-  tableName: ${join(Connections, ${upper(${self:provider.stage}}), '-')}
+  tableName: ${join(Connections, ${upper(${self:provider.stage})}, '-')}
 ```
 
 Outputs:
